@@ -11,7 +11,13 @@ public class PlayerControl : MonoBehaviour {
     public Text hpDownNumLabel;
     public Image hpGauge;
     public Image playerSprite;
+    public Text totalHpLabel;
     public Text hpLabel;
+
+    void Start()
+    {
+        totalHpLabel.text = "/ " + totalHpLabel.ToString();
+    }
 
     public void HpControl(int num)
     {
