@@ -96,7 +96,11 @@ public class RandomManager : MonoBehaviour {
             if (randomData[i].GetPercent() > (int)Random.Range(1, 100))
                 scratchSprite[i].GetComponent<Image>().sprite = _gameManager.scratchSprite[0, (int)Random.Range(1, 9)];
             else
+            {
                 scratchSprite[i].GetComponent<Image>().sprite = _gameManager.scratchSprite[1, (int)Random.Range(1, 9)];
+                randomData[i].Init(randomData[i].GetPercent(), 0, randomData[i].GetType());
+            }
+
 
             randomPercent[i].text = randomData[i].GetPercent().ToString() + "%";
             skillImage[i].sprite = skillSprite[randomData[i].GetType()];

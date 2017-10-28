@@ -109,6 +109,9 @@ public class GameManager : MonoBehaviour {
             timeGaugeObject[i].SetActive(false);
             yield return timeCountDownDelay;
         }
+
+        FightStart();
+
     }
 
     public void RefreshTicketUse()

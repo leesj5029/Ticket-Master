@@ -108,8 +108,16 @@ public class PlayerControl : MonoBehaviour {
         //int num = Random.Range(-60, 60);
         int num = -randomManager.randomData[posNum].GetDamage();
         //Debug.Log("Fight : " + num);
+        if(num == 0)
+        {
+            Debug.Log("꽝");
+            if (MainPlayer)
+            {
+                effectLabel.text = "꽝!!";
+            }
 
-        if (num < 0)
+        }
+        else if (num < 0)
         {
             otherPlayerControl.HpControl(num);
             _animator.SetTrigger("Attack");
@@ -122,12 +130,10 @@ public class PlayerControl : MonoBehaviour {
                 else if (num < -40)
                 {
                     effectLabel.text = _gameManager.effectString[1];
-
                 }
                 else if (num < -30)
                 {
                     effectLabel.text = _gameManager.effectString[2];
-
                 }
                 else if (num < -20)
                 {

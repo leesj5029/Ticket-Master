@@ -42,7 +42,7 @@ public class ScratchManager : MonoBehaviour {
                 leftCount--;
             }
         }
-        if(leftCount < 60)
+        if(leftCount < 80)
         {
             if (!_gameManager.fight)
             {
