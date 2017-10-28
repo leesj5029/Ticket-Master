@@ -18,8 +18,6 @@ public class GameManager : MonoBehaviour {
     public bool fight;
 
     public GameObject startBack;
-    public GAui[] startPlayerGaui;
-    public GAui vsGaui;
     public GameObject reTicketButton;
 
     public Sprite[,] scratchSprite = new Sprite[2,9];
@@ -37,9 +35,13 @@ public class GameManager : MonoBehaviour {
     public GameObject[] ticket;
 
     public AudioSource _audioSource;
+
+    public AudioSource scratchAudioSource;
     public AudioClip[] effectSound;
     public AudioClip xSound;
     public AudioClip warningSound;
+    public AudioClip hurtSound;
+    public AudioClip scratchSound;
 
     public AudioSource musicManager;
 
@@ -47,7 +49,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         //Application.targetFrameRate = 60;
-        StartGame();
+        //StartGame();
         CreateHiddenEffect();
 
         for (int i = 0; i < 2; i++)
@@ -95,21 +97,9 @@ public class GameManager : MonoBehaviour {
     {
         StopCoroutine("TimeCountDownCoroutine");
         startBack.SetActive(true);
-        vsGaui.gameObject.SetActive(true);
-        vsGaui.MoveIn();
-        yield return new WaitForSeconds(1);
-        for (int i = 0; i < startPlayerGaui.Length; i++)
-        {
-            startPlayerGaui[i].gameObject.SetActive(true);
-            startPlayerGaui[i].MoveIn();
-        }
-        yield return new WaitForSeconds(3.6f);
-        for (int i = 0; i < startPlayerGaui.Length; i++)
-        {
-            startPlayerGaui[i].MoveOut();
-        }
-        vsGaui.MoveOut();
-        yield return new WaitForSeconds(0.6f);
+
+        yield return new WaitForSeconds(3f);
+
         startBack.SetActive(false);
         _randomManager.RandomMix();
         
@@ -181,7 +171,7 @@ public class GameManager : MonoBehaviour {
         fight = false;
         if(_playerControl[0].hp <= 0)
         {
-            gameOverLabel.text = "패배..";
+            gameOverLabel.text = "죽었습니다..";
             GameOver();
         }
         else if (_playerControl[1].hp <= 0)
@@ -227,6 +217,15 @@ public class GameManager : MonoBehaviour {
     public void WarningSoundPlay()
     {
         _audioSource.PlayOneShot(warningSound);
+    }
+    public void HurtSoundPlay()
+    {
+        _audioSource.PlayOneShot(hurtSound);
+    }
+    public void ScratchSoundPlay()
+    {
+        scratchAudioSource.Stop();
+        scratchAudioSource.PlayOneShot(scratchSound);
     }
 
 }

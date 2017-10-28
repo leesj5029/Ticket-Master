@@ -135,6 +135,8 @@ public class PlayerControl : MonoBehaviour {
             {
                 effectLabel.text = "라이벌의 복권은 꽝이다!!";
                 StartCoroutine("HurtEffectCoroutine");
+                attackEffect[0].SetActive(true);
+                _gameManager.EffectSoundPlay(6);
             }
             else
             {
@@ -143,6 +145,7 @@ public class PlayerControl : MonoBehaviour {
                 _animator.SetTrigger("Attack");
                 effectLabel.text = "라이벌에게" + (-damage).ToString() + "만큼 피해를 입었다!!";
                 StartCoroutine("HurtEffectCoroutine");
+                _gameManager.HurtSoundPlay();
             }
         }
         else
@@ -170,6 +173,8 @@ public class PlayerControl : MonoBehaviour {
                     effectLabel.text = "꽝!!";
                     X_image[posNum].SetActive(true);
                     StartCoroutine("XSoundPlayCoroutine");
+                    attackEffect[6].SetActive(true);
+                    _gameManager.EffectSoundPlay(6);
                 }
 
             }

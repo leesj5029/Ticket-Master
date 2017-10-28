@@ -101,28 +101,28 @@ public class RandomManager : MonoBehaviour {
             }
             else if (randomNum == 1)
             {
-                randomData[i].Init(10, 140, 4);
+                randomData[i].Init(15, 120, 4);
             }
             else if (randomNum == 2)
             {
-                randomData[i].Init(20, 85, 3);
+                randomData[i].Init(25, 75, 3);
             }
             else if (randomNum == 3)
             {
-                randomData[i].Init(35, 55, 2);
+                randomData[i].Init(40, 50, 2);
             }
             else if (randomNum == 4)
             {
-                randomData[i].Init(65, 25, 1);
+                randomData[i].Init(60, 30, 1);
             }
             else if (randomNum == 5)
             {
-                randomData[i].Init(80, 15, 0);
+                randomData[i].Init(90, 15, 0);
             }
 
-
-           // if (randomData[i].GetPercent() > (int)Random.Range(1, 100))
-             if (randomData[i].GetPercent() > (int)Random.Range(1, 100))
+            damageLabel[i].text = randomData[i].GetDamage().ToString();
+            // if (randomData[i].GetPercent() > (int)Random.Range(1, 100))
+            if (randomData[i].GetPercent() > (int)Random.Range(1, 100))
                     scratchSprite[i].GetComponent<Image>().sprite = _gameManager.scratchSprite[0, (int)Random.Range(1, 9)];
             else
             {
@@ -131,7 +131,6 @@ public class RandomManager : MonoBehaviour {
             }
 
             randomPercent[i].text = randomData[i].GetPercent().ToString() + "%";
-            damageLabel[i].text = randomData[i].GetDamage().ToString();
             skillImage[i].sprite = skillSprite[randomData[i].GetType()];
             mask[i].SetActive(false);
             _gameManager.reTicketButton.SetActive(false);

@@ -75,6 +75,7 @@ public class ScratchController : MonoBehaviour {
             _randomManager.mask[posNum].SetActive(false);
         }
 
+        _randomManager._gameManager.ScratchSoundPlay();
         gameObject.SetActive(false);
 
     }
