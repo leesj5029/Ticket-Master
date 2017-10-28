@@ -62,10 +62,11 @@ public class GameManager : MonoBehaviour {
     
 
 
-    public void NextTurn()
+    public void TimeCountDown()
     {
         StopCoroutine("TimeCountDownCoroutine");
         StartCoroutine("TimeCountDownCoroutine");
+
     }
 
     IEnumerator StartCoroutine()
@@ -123,6 +124,12 @@ public class GameManager : MonoBehaviour {
     public void FightStart()
     {
         fight = true;
+        StopCoroutine("TimeCountDownCoroutine");
+        for (int i = 0; i < timeGaugeObject.Length; i++)
+        {
+            timeGaugeObject[i].SetActive(false);
+        }
+
         StartCoroutine("FightCoroutine");
     }
     IEnumerator FightCoroutine()
@@ -131,5 +138,9 @@ public class GameManager : MonoBehaviour {
         _playerControl[0].Fight();
         yield return new WaitForSeconds(1f);
         _playerControl[1].Fight();
+        yield return new WaitForSeconds(1f);
+        fight = false;
+        Refresh();
+        
     }
 }

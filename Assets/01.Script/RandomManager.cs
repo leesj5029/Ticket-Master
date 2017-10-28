@@ -11,7 +11,7 @@ public class RandomManager : MonoBehaviour {
     Text[] randomPercent = new Text[3];
     Text[] randomSkill = new Text[3];
 
-
+    public GameManager _gameManager;
     public GameObject[] mask = new GameObject[3];
     public Sprite[] skillSprite;
     Image[] skillImage = new Image[3];
@@ -83,6 +83,8 @@ public class RandomManager : MonoBehaviour {
             }
             randomPercent[i].text = randomData[i].GetPercent().ToString() + "%";
             skillImage[i].sprite = skillSprite[randomData[i].GetType()];
+            mask[i].SetActive(false);
+            _gameManager.TimeCountDown();
         }
     }
 }

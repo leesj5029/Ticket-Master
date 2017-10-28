@@ -37,11 +37,12 @@ public class ScratchManager : MonoBehaviour {
                 leftCount--;
             }
         }
-        if(leftCount < 126)
+        if(leftCount < 60)
         {
             if (!_gameManager.fight)
             {
                 _gameManager.FightStart();
+                
                 for (int i = 0; i < hiddenPool.Count; i++)
                 {
                     hiddenPool[i].SetActive(false);
@@ -53,6 +54,7 @@ public class ScratchManager : MonoBehaviour {
     GameObject blockPrefab;
     void StartHidden()
     {
+        hiddenPool.Clear();
         for (int i = 0; i < width; i += (int)hiddenWidth)
         {
             for (int j = 0; j < height; j += (int)hiddenHeight)
