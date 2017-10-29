@@ -29,10 +29,7 @@ public class RandomManager : MonoBehaviour {
         //RandomMix();
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
     void Init()
     {
@@ -62,6 +59,7 @@ public class RandomManager : MonoBehaviour {
         //skillSprite[11] = Resources.Load<Sprite>("ConfirmImage/icon/skillicon.");
     }
     public bool refresh;
+    public GameObject[] collOnMask;
     public void RandomMix()
     {
         int[] randomMixNum = new int[3];
@@ -73,27 +71,31 @@ public class RandomManager : MonoBehaviour {
         {
             for (int j = 0; j < _scratchManager[i].hiddenPool.Count; j++)
             {
-                _scratchManager[i].hiddenPool[j].SetActive(true);
+                _scratchManager[i].hiddenPool[j].SetActive(false);
             }
         }
         for (int i = 0; i < 3; i++)
         {
+            collOnMask[i].SetActive(true);
             int randomNum = Random.Range(0,6);
             randomMixNum[i] = randomNum;
-            if(i > 0)
-            {
-                while (randomMixNum[i - 1] == randomNum)
-                {
-                    randomNum = Random.Range(0, 6);
-                }
-            }
-            else if (i > 1)
+            if (i > 1)
             {
                 while (randomMixNum[i - 1] == randomNum || randomMixNum[i - 2] == randomNum)
                 {
                     randomNum = Random.Range(0, 6);
                 }
+                randomMixNum[i] = randomNum;
             }
+            else if (i > 0)
+            {
+                while (randomMixNum[i - 1] == randomNum)
+                {
+                    randomNum = Random.Range(0, 6);
+                }
+
+            }
+
 
             if (randomNum == 0)
             {
@@ -121,8 +123,8 @@ public class RandomManager : MonoBehaviour {
             }
 
             damageLabel[i].text = randomData[i].GetDamage().ToString();
-            // if (randomData[i].GetPercent() > (int)Random.Range(1, 100))
             if (randomData[i].GetPercent() > (int)Random.Range(1, 100))
+            //if (true)
                     scratchSprite[i].GetComponent<Image>().sprite = _gameManager.scratchSprite[0, (int)Random.Range(1, 9)];
             else
             {
@@ -133,7 +135,7 @@ public class RandomManager : MonoBehaviour {
             randomPercent[i].text = randomData[i].GetPercent().ToString() + "%";
             skillImage[i].sprite = skillSprite[randomData[i].GetType()];
             mask[i].SetActive(false);
-            _gameManager.reTicketButton.SetActive(false);
+           
 
 
             scratching = false;
@@ -147,36 +149,45 @@ public class RandomManager : MonoBehaviour {
         {
             _gameManager.TimeCountDown();
         }
-        //Debug.Log(randomData[0].GetPercent() + " / " + randomData[0].GetDamage());
-    }
+
+        for (int i = 0; i < _gameManager.ticket.Length; i++)
+        {
+            if (_gameManager.ticket[i].activeSelf)
+            {
+                _gameManager.reTicketButton.SetActive(false);
+            }
+        }
 }
 
-public class RandomData
-{
-    int percent = -1;
-    int damage = -1;
-    int type = -1;
 
-    public void Init(int percent, int damage, int type)
-    {
-        this.percent = percent;
-        this.damage = damage;
-        this.type = type;
-    }
 
-    public int GetPercent()
+    public class RandomData
     {
-        return percent;
-    }
+        int percent = -1;
+        int damage = -1;
+        int type = -1;
 
-    public int GetDamage()
-    {
-        return damage;
-    }
+        public void Init(int percent, int damage, int type)
+        {
+            this.percent = percent;
+            this.damage = damage;
+            this.type = type;
+        }
 
-    public int GetType()
-    {
-        return type;
+        public int GetPercent()
+        {
+            return percent;
+        }
+
+        public int GetDamage()
+        {
+            return damage;
+        }
+
+        public int GetType()
+        {
+            return type;
+        }
     }
 
 }

@@ -61,11 +61,6 @@ public class GameManager : MonoBehaviour {
     }
     
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 
 
     void CreateHiddenEffect()
@@ -105,7 +100,7 @@ public class GameManager : MonoBehaviour {
         
     }
     public bool timeCountDownEnd;
-    WaitForSeconds timeCountDownDelay = new WaitForSeconds(1f);
+    WaitForSeconds timeCountDownDelay = new WaitForSeconds(0.8f);
     IEnumerator TimeCountDownCoroutine()
     {
         timeCountDownEnd = false;
@@ -143,7 +138,10 @@ public class GameManager : MonoBehaviour {
                 break;
             }
         }
-        
+        if (!refreshTicket[0].activeSelf)
+        {
+            reTicketButton.SetActive(true);
+        }
     }
     public void Refresh()
     {
@@ -161,14 +159,22 @@ public class GameManager : MonoBehaviour {
 
         StartCoroutine("FightCoroutine");
     }
+    public GameObject confetti;
     IEnumerator FightCoroutine()
     {
         yield return new WaitForSeconds(0.4f);
         _playerControl[0].Fight();
         yield return new WaitForSeconds(2f);
         _playerControl[1].Fight();
-        yield return new WaitForSeconds(1.8f);
-        fight = false;
+        yield return new WaitForSeconds(2f);
+        if (_randomManager.randomData[_playerControl[0].posNum].GetType() == 5)
+        {
+            if(_randomManager.randomData[_playerControl[0].posNum].GetDamage() != 0)
+            {
+                yield return new WaitForSeconds(3.2f);
+            }
+        }
+            fight = false;
         if(_playerControl[0].hp <= 0)
         {
             gameOverLabel.text = "죽었습니다..";
@@ -179,6 +185,7 @@ public class GameManager : MonoBehaviour {
             gameOverLabel.text = "승리!!";
             GameOver();
             _playerControl[1]._animator.SetTrigger("Die");
+            confetti.SetActive(true);
         }
         else
         {

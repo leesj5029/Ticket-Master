@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ScratchController : MonoBehaviour {
 
@@ -11,7 +10,7 @@ public class ScratchController : MonoBehaviour {
     float mouseCurrent = -1;
 
     RandomManager _randomManager;
-    int posNum;
+    public int posNum;
     ScratchManager _scratchManager;
 
     PlayerControl playerControl;
@@ -80,15 +79,9 @@ public class ScratchController : MonoBehaviour {
 
     }
 
-    // Update is called once per frame
-    void Update () {
-        //CheckMouse();
-	}
 
-    void ChangeSprite()
-    {
 
-    }
+
 
     //void CheckMouse()
     //{

@@ -57,7 +57,7 @@ public class PlayerControl : MonoBehaviour {
         StartCoroutine(HpDownColorControl(num));
     }
 
-    WaitForSeconds hpDownDelay = new WaitForSeconds(0.016f);
+    WaitForSeconds hpDownDelay = new WaitForSeconds(0.001f);
     IEnumerator HpDownCoroutine(int num)
     {
         if(num > 0)
@@ -74,15 +74,16 @@ public class PlayerControl : MonoBehaviour {
         }
         else
         {
-            if (hp > 0)
+            for (int i = 0; i < -num; i++)
             {
-                for (int i = 0; i < -num; i++)
+                if (hp > 0)
                 {
                     hp--;
                     HpSet();
                     yield return hpDownDelay;
                 }
-            }                
+
+            }
         }
     }
     public void HpSet()
@@ -91,7 +92,7 @@ public class PlayerControl : MonoBehaviour {
         hpLabel.text = hp.ToString();
     }
 
-    WaitForSeconds hpDownColorDelay = new WaitForSeconds(0.1f);
+    WaitForSeconds hpDownColorDelay = new WaitForSeconds(0.06f);
     IEnumerator HpDownColorControl(int num)
     {
         if(num > 0)
@@ -180,14 +181,23 @@ public class PlayerControl : MonoBehaviour {
             }
             else if (num < 0)
             {
-                otherPlayerControl.HpControl(num);
+                
                 _animator.SetTrigger("Attack");
                 if (MainPlayer)
                 {
                     O_image[posNum].SetActive(true);
                     effectLabel.text = _gameManager.effectString[randomManager.randomData[posNum].GetType()];
-                    attackEffect[randomManager.randomData[posNum].GetType()].SetActive(true);
-                    _gameManager.EffectSoundPlay(randomManager.randomData[posNum].GetType());
+                    if(randomManager.randomData[posNum].GetType() == 5)
+                    {
+                        StartCoroutine(OnePunch(num));
+                    }
+                    else
+                    {
+                        otherPlayerControl.HpControl(num);
+                        attackEffect[randomManager.randomData[posNum].GetType()].SetActive(true);
+                        _gameManager.EffectSoundPlay(randomManager.randomData[posNum].GetType());
+
+                    }
                     /*
                     if (num < -50)
                     {
@@ -227,6 +237,17 @@ public class PlayerControl : MonoBehaviour {
                 }
             }
         }        
+    }
+
+
+    IEnumerator OnePunch(int num)
+    {
+
+        attackEffect[7].SetActive(true);
+        yield return new WaitForSeconds(1.2f);
+        attackEffect[5].SetActive(true);
+        otherPlayerControl.HpControl(num);
+        _gameManager.EffectSoundPlay(5);
     }
     IEnumerator XSoundPlayCoroutine()
     {

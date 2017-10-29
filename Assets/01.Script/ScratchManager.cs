@@ -14,6 +14,7 @@ public class ScratchManager : MonoBehaviour {
     float hiddenHeight = -1;
 
     public List<GameObject> hiddenPool = new List<GameObject>();
+    public List<ScratchController> scratchControllerPool = new List<ScratchController>();
     public GameManager _gameManager;
 
     public Sprite test;
@@ -42,7 +43,7 @@ public class ScratchManager : MonoBehaviour {
                 leftCount--;
             }
         }
-        if(leftCount < 90)
+        if(leftCount < 70)
         {
             if (!_gameManager.fight)
             {
@@ -57,6 +58,15 @@ public class ScratchManager : MonoBehaviour {
         }
     }
 
+    public void CollOn()
+    {
+        for (int i = 0; i < hiddenPool.Count; i++)
+        {
+            hiddenPool[i].SetActive(true);
+        }
+    }
+
+
     GameObject blockPrefab;
     void StartHidden()
     {
@@ -70,6 +80,8 @@ public class ScratchManager : MonoBehaviour {
                 hidden.GetComponent<RectTransform>().localPosition = new Vector2((-width / 2) + i, (-height / 2) + j);
                 hidden.GetComponent<RectTransform>().localScale = Vector3.one;
                 hiddenPool.Add(hidden);
+                scratchControllerPool.Add(hidden.GetComponent<ScratchController>());
+                hidden.SetActive(false);
             }
         }
 
